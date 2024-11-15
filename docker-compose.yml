@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  server1:
+    build:
+      context: ./server1
+    container_name: server1
+    ports:
+      - "8001:8001"
+    networks:
+      - my_network
+
+  server2:
+    build:
+      context: ./server2
+    container_name: server2
+    ports:
+      - "8002:8002"
+    networks:
+      - my_network
+
+  nginx-proxy:
+    build:
+      context: ./nginx
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - server1
+      - server2
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
