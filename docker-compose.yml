@@ -1,25 +1,38 @@
-version: '3.8'
+version: "3.8"
 
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - my_network            
+
   server1:
     build:
       context: ./server1
     container_name: server1
+    depends_on:
+      - rabbitmq
     ports:
       - "8001:8001"
     networks:
-      - my_network
+      - my_network      
 
   server2:
     build:
       context: ./server2
     container_name: server2
+    depends_on:
+      - rabbitmq
     ports:
       - "8002:8002"
     networks:
-      - my_network
+      - my_network      
 
-  nginx-proxy:
+  nginx:
     build:
       context: ./nginx
     container_name: nginx-proxy
