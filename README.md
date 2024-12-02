@@ -11,10 +11,14 @@ nginx-poc/
 │   ├── Dockerfile          # FastAPI Dockerfile for server1
 │   ├── main.py             # FastAPI app for items
 │   └── requirements.txt    # Python requirements for server1
-└── server2/
-    ├── Dockerfile          # FastAPI Dockerfile for server2
-    ├── main.py             # FastAPI app for orders
-    └── requirements.txt    # Python requirements for server2
+├── server2/
+│   ├── Dockerfile          # FastAPI Dockerfile for server2
+│   ├── main.py             # FastAPI app for orders
+│   └── requirements.txt    # Python requirements for server2
+└── server3/
+    ├── Dockerfile          # FastAPI Dockerfile for server3
+    ├── main.py             # FastAPI app similar to server2
+    └── requirements.txt    # Python requirements for server3
 
 ```
 
@@ -49,6 +53,10 @@ uvicorn main:app --host 127.0.0.1 --port 8001 --reload
 cd server2
 pip install -r requirements.txt
 uvicorn main:app --host 127.0.0.1 --port 8002 --reload
+
+cd server3
+pip install -r requirements.txt
+uvicorn main:app --host 127.0.0.1 --port 8003 --reload
 ```
 
 4. Starting NGINX(using the first code part in ngin.cong file)
@@ -70,6 +78,7 @@ Now you should be able to test the endpoints via NGINX:
 ```
 Access server1 (Items service): http://localhost/items
 Access server2 (Orders service): http://localhost/orders
+Access server3 (Orders service): http://localhost/orders
 ```
 
 ### Run the Application with Docker Image File

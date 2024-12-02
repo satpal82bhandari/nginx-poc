@@ -11,12 +11,12 @@ RABBITMQ_HOST = "rabbitmq"
 # In-memory store for items received from RabbitMQ
 received_items = []
 
-LOG_FILE = "/app/logs/server2.log"
+LOG_FILE = "/app/logs/server3.log"
 
 @app.get("/")
-def server2_status():
-    """Test endpoint to check if Server2 is running."""
-    return {"status": "Server2 is running"}
+def server3_status():
+    """Test endpoint to check if Server3 is running."""
+    return {"status": "Server3 is running"}
 
 def consume_messages():
     """Consume messages from RabbitMQ and store them in memory."""
@@ -33,13 +33,13 @@ def consume_messages():
             def callback(ch, method, properties, body):
                 item = json.loads(body)
                 received_items.append(item)
-                log_message = f"Server2 called: Received item {item}"
+                log_message = f"Server3 called: Received item {item}"
                 print(log_message)
 
                 # Write to log file
                 with open(LOG_FILE, "a") as log_file:
                     log_file.write(log_message + "\n")
-                    
+
             # Start consuming
             channel.basic_consume(queue="item_queue", on_message_callback=callback, auto_ack=True)
             print("Waiting for messages...")
